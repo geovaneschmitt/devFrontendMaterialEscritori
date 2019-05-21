@@ -1,0 +1,51 @@
+<nav class="navbar navbar-light bg-light">
+    <button class="btn btn-outline-secondary" routerLink="/">
+      <i>Voltar</i>
+    </button>
+    <span>Nova Solicitação - Favor preencher todos os Campos</span>
+</nav>
+<div class="container mt-1">
+    <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="userRequester">Pessoa:</label>
+        <span style="color:red; margin-left: 20px;" *ngIf="userRequester.invalid && (userRequester.dirty || userRequester.touched)">Favor inserir o solicitante</span>
+        <input type="text" placeholder="Insira aqui o nome do solicitante do material" id="userRequester" class="form-control" formControlName="userRequester">
+      </div>
+      <div class="form-group">
+        <label for="description">Material:</label>
+        <span style="color:red; margin-left: 20px;" *ngIf="description.invalid && (description.dirty || description.touched)">Favor inserir o nome do produto</span>
+        <input type="text" placeholder="Insira aqui o nome do material" id="description" class="form-control" formControlName="description">
+      </div>
+      <div class="form-group">
+          <label for="description">Prioridade:</label>
+          <span style="color:red; margin-left: 20px;" *ngIf="priority.invalid && (priority.dirty || priority.touched)">Favor inserir a prioridade</span>
+          <select class="form-control" id="priority" formControlName="priority">
+              <option value="" disabled selected>Selecione um grau de prioridade</option>
+              <option value="Alta">Alta</option>
+              <option value="Média">Média</option>
+              <option value="Baixa">Baixa</option>
+            </select>
+        </div>
+      <div class="form-group">
+        <label for="productCost">Valor:</label>
+        <span style="color:red; margin-left: 20px;" *ngIf="productCost.invalid && (productCost.dirty || productCost.touched)">Favor inserir o valor</span>
+        <input id="productCost"  class="form-control" currencyMask formControlName="productCost">
+      </div>
+      <div *ngIf="this.function == 'warehouse'">
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <select class="form-control" id="status" formControlName="status">
+            <option value="Aprovado">Aprovar</option>
+            <option value="Reprovado">Reprovar</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="this.function == 'warehouse'">
+        <label for="obs">Observação:</label>
+        <span  style="color:red; margin-left: 20px;" *ngIf="obs.invalid && this.function == 'warehouse'">Favor informar uma observação antes de reprovar</span>
+        <textarea class="form-control" id="obs" rows="5" formControlName="obs"></textarea>
+      </div>
+      <button type="submit" class="btn btn-outline-primary" [disabled]="requestForm.invalid">Salvar</button>
+    </form>
+</div>
+  

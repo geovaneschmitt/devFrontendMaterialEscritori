@@ -1,0 +1,56 @@
+<nav class="navbar navbar-light bg-light">
+    <button class="btn btn-outline-secondary" routerLink="/">
+      <i>Voltar</i>
+    </button>
+
+    <div>
+      <button *ngIf="this.function == 'admin'" class="btn btn-outline-primary">
+        Aprovados
+      </button>
+      <button *ngIf="this.function == 'admin'" class="btn btn-outline-danger">
+          Reprovados
+      </button>
+      <button  *ngIf="this.function == 'admin'" class="btn btn-outline-info">
+          Prioridade Baixa
+      </button>
+      <button *ngIf="this.function == 'admin'" class="btn btn-outline-info">
+          Prioridade Média
+      </button>
+      <button  *ngIf="this.function == 'admin'" class="btn btn-outline-info">
+          Prioridade Alta
+      </button>
+    </div>
+  </nav>
+  <div class="container mt-5">
+
+    <!-- WAREHOUSE -->
+    <div class="list-group" *ngIf="this.function == 'warehouse'">
+      <a href="/request/warehouse/{{request.id}}" class="list-group-item list-group-item-action" *ngFor="let request of requests">
+        <div class="p-2 bd-highlight justify-content-between">
+          <small>{{request.userRequester}}</small>
+          <h5 class="mb-1">{{request.description}} - Prioridade {{request.priority}}</h5>
+          <p>{{request.productCost | currency:'BRL'}}</p>
+        </div>
+        <p *ngIf="request.status == 'Reprovado'">Observação: {{request.obs}}</p>
+      </a>
+    </div>
+
+
+
+
+    <!-- ADMIN -->
+    <div class="list-group" *ngIf="this.function == 'admin'">
+      <a class="list-group-item list-group-item-action" *ngFor="let request of requests">
+        <div class="p-2 bd-highlight justify-content-between">
+          <small>{{request.userRequester}}</small>
+          <h5 class="mb-1">{{request.description}} - Prioridade {{request.priority}}</h5>
+          <p>{{request.productCost | currency:'BRL'}}</p>
+        </div>
+        <p *ngIf="request.status == 'Repr'">Observação: {{request.obs}}</p>
+        <div class="p-2 bd-highlight justify-content-between">
+          <span class="badge badge-danger" *ngIf="this.function == 'admin' && request.status == 'Reprovado'">{{request.status}}</span>
+          <span class="badge badge-success" *ngIf="this.function == 'admin' && request.status == 'Aprovado'">{{request.status}}</span>
+        </div>
+      </a>
+    </div>
+  </div>
